@@ -158,7 +158,7 @@ const MainApp: React.FC = () => {
           />
           <main 
             className={`transition-all duration-300 ease-in-out ${
-              isSidebarMinimized ? 'ml-20' : 'ml-72'
+              isSidebarMinimized ? 'ml-16' : 'ml-64'
             }`}
           >
             <div className="p-6">
