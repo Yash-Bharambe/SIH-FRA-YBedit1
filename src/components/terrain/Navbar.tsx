@@ -13,7 +13,6 @@ interface ConfirmationModalProps {
   onCancel: () => void;
   title: string;
   message: string;
-  isLoading?: boolean;
 }
 
 // Confirmation Modal Component
@@ -22,8 +21,7 @@ const ConfirmationModal: React.FC<ConfirmationModalProps> = ({
   onConfirm,
   onCancel,
   title,
-  message,
-  isLoading = false
+  message
 }) => {
   if (!isOpen) return null;
 
@@ -32,7 +30,7 @@ const ConfirmationModal: React.FC<ConfirmationModalProps> = ({
       {/* Backdrop */}
       <div 
         className="fixed inset-0 bg-black/50 z-[60] transition-opacity duration-200"
-        onClick={!isLoading ? onCancel : undefined}
+        onClick={onCancel}
       />
       
       {/* Modal */}
@@ -58,27 +56,16 @@ const ConfirmationModal: React.FC<ConfirmationModalProps> = ({
           <div className="flex justify-end space-x-3 px-6 pb-6">
             <button
               onClick={onCancel}
-              disabled={isLoading}
-              className="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors duration-200"
             >
               Cancel
             </button>
             <button
               onClick={onConfirm}
-              disabled={isLoading}
-              className="px-4 py-2 text-sm font-medium text-white bg-red-600 hover:bg-red-700 rounded-lg transition-colors duration-200 flex items-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="px-4 py-2 text-sm font-medium text-white bg-red-600 hover:bg-red-700 rounded-lg transition-colors duration-200 flex items-center space-x-2"
             >
-              {isLoading ? (
-                <>
-                  <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                  <span>Logging out...</span>
-                </>
-              ) : (
-                <>
-                  <Check className="w-4 h-4" />
-                  <span>Confirm Logout</span>
-                </>
-              )}
+              <Check className="w-4 h-4" />
+              <span>Confirm Logout</span>
             </button>
           </div>
         </div>
@@ -92,7 +79,6 @@ export const Navbar: React.FC<NavbarProps> = ({ activeSection, onSectionChange }
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [showLogoutConfirmation, setShowLogoutConfirmation] = useState(false);
-  const [isLoggingOut, setIsLoggingOut] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -109,39 +95,14 @@ export const Navbar: React.FC<NavbarProps> = ({ activeSection, onSectionChange }
     setIsMobileMenuOpen(false); // Close mobile menu if open
   };
 
-  // This is your original working logout function with better error handling
+  // This is your original working logout function
   const handleLogoutConfirm = async () => {
-    setIsLoggingOut(true);
-    
-    try {
-      console.log('Starting logout process...');
-      
-      // Call the signOut function
-      const result = await signOut();
-      
-      console.log('SignOut result:', result);
-      
-      // Close the modal
-      setShowLogoutConfirmation(false);
-      
-      // Add a small delay to ensure the signOut completes
-      setTimeout(() => {
-        // Force a page reload to ensure complete logout
-        window.location.reload();
-      }, 100);
-      
-    } catch (error) {
-      console.error('Logout error:', error);
-      alert('Failed to logout. Please try again.');
-    } finally {
-      setIsLoggingOut(false);
-    }
+    await signOut();
+    setShowLogoutConfirmation(false);
   };
 
   const handleLogoutCancel = () => {
-    if (!isLoggingOut) {
-      setShowLogoutConfirmation(false);
-    }
+    setShowLogoutConfirmation(false);
   };
 
   const toggleMobileMenu = () => {
@@ -194,8 +155,7 @@ export const Navbar: React.FC<NavbarProps> = ({ activeSection, onSectionChange }
                 </div>
                 <button
                   onClick={handleLogoutClick}
-                  disabled={isLoggingOut}
-                  className="flex items-center space-x-2 px-3 py-1.5 text-forest-medium hover:text-forest-deep hover:bg-forest-sage/5 rounded-full transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="flex items-center space-x-2 px-3 py-1.5 text-forest-medium hover:text-forest-deep hover:bg-forest-sage/5 rounded-full transition-all duration-300"
                 >
                   <LogOut className="h-4 w-4" />
                   <span className="text-sm">Logout</span>
@@ -230,8 +190,7 @@ export const Navbar: React.FC<NavbarProps> = ({ activeSection, onSectionChange }
               </div>
               <button
                 onClick={handleLogoutClick}
-                disabled={isLoggingOut}
-                className="flex items-center space-x-2 w-full px-3 py-2 text-forest-medium hover:text-forest-deep hover:bg-forest-sage/5 rounded-xl transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="flex items-center space-x-2 w-full px-3 py-2 text-forest-medium hover:text-forest-deep hover:bg-forest-sage/5 rounded-xl transition-all duration-300"
               >
                 <LogOut className="h-4 w-4" />
                 <span className="text-sm">Logout</span>
@@ -248,7 +207,6 @@ export const Navbar: React.FC<NavbarProps> = ({ activeSection, onSectionChange }
         onCancel={handleLogoutCancel}
         title="Confirm Logout"
         message="Are you sure you want to log out? You will need to sign in again to access the system."
-        isLoading={isLoggingOut}
       />
     </>
   );
