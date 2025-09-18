@@ -34,13 +34,13 @@ const DocumentUpload: FC<DocumentUploadProps> = ({
   file, 
   onFileChange 
 }) => (
-  <div className="relative">
-    <label className="block text-sm font-medium text-gray-700 mb-1">
+  <div className="space-y-2">
+    <label className="block text-sm font-medium text-gray-700">
       {label} <span className="text-red-500">*</span>
     </label>
-    <p className="text-xs text-gray-500 mb-2">{description}</p>
-    <div className={`relative border-2 border-dashed rounded-lg p-4 ${
-      file ? 'border-green-200 bg-green-50' : 'border-gray-300 hover:border-gray-400'
+    <p className="text-xs text-gray-500">{description}</p>
+    <div className={`relative border-2 border-dashed rounded-lg p-6 transition-all hover:shadow-sm ${
+      file ? 'border-emerald-300 bg-emerald-50' : 'border-gray-300 hover:border-gray-400 bg-white'
     }`}>
       <input
         type="file"
@@ -51,19 +51,19 @@ const DocumentUpload: FC<DocumentUploadProps> = ({
       />
       <div className="flex items-center justify-center">
         {file ? (
-          <div className="text-sm text-green-600 flex items-center">
+          <div className="text-sm text-emerald-600 flex items-center">
             <svg className="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
               <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
             </svg>
-            {file.name}
+            <span className="font-medium">{file.name}</span>
           </div>
         ) : (
           <div className="text-sm text-gray-600 text-center">
-            <svg className="mx-auto h-8 w-8 mb-2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="mx-auto h-10 w-10 mb-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3 3m0 0l-3-3m3 3v-7" />
             </svg>
-            <span>Click or drop file here</span>
-            <span className="block text-xs mt-1">PDF, JPG, PNG up to 10MB</span>
+            <span className="block font-medium">Click or drop file here</span>
+            <span className="block text-xs mt-1 text-gray-500">PDF, JPG, PNG up to 10MB</span>
           </div>
         )}
       </div>
@@ -264,146 +264,149 @@ const FraClaimForm: FC = () => {
   };
 
   return (
-    <div className="max-w-4xl mx-auto bg-white p-8 rounded-xl shadow-lg border border-gray-100">
-      <div className="text-center mb-8">
-        <h2 className="text-3xl font-bold text-gray-900">Forest Rights Claim Form</h2>
-        <p className="mt-2 text-gray-600">Submit your forest rights claim under the Forest Rights Act</p>
+    <div className="bg-white rounded-lg shadow-sm border border-gray-200">
+      <div className="p-6 border-b border-gray-200">
+        <h2 className="text-2xl font-bold text-gray-900">Forest Rights Claim Form</h2>
+        <p className="mt-2 text-gray-600">Complete the form below to submit your forest rights claim</p>
       </div>
       
-      <form onSubmit={handleSubmit} className="space-y-8">
+      <form onSubmit={handleSubmit} className="p-6 space-y-8">
         {/* Claim Type Section */}
-        <div className="bg-gray-50 p-6 rounded-lg border border-gray-200">
-          <h3 className="text-lg font-semibold text-gray-900 mb-4">Type of Forest Rights Claim</h3>
-          <div className="space-y-4">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              {(['IFR', 'CFRR', 'CR'] as const).map((type) => (
-                <label key={type} className="cursor-pointer">
-                  <input
-                    type="radio"
-                    name="claimType"
-                    value={type}
-                    checked={formData.claimType === type}
-                    onChange={handleInputChange}
-                    className="sr-only"
-                  />
-                  <div className={`p-4 rounded-lg border-2 text-center transition-all ${
-                    formData.claimType === type 
-                      ? 'border-green-500 bg-green-50 text-green-700' 
-                      : 'border-gray-200 hover:border-gray-300'
-                  }`}>
-                    <div className="font-medium mb-2">
-                      {type === 'IFR' && 'Individual Forest Rights'}
-                      {type === 'CFRR' && 'Community Forest Resource Rights'}
-                      {type === 'CR' && 'Community Rights'}
-                    </div>
-                    <div className="text-xs text-gray-600">
-                      {getClaimTypeDescription(type)}
-                    </div>
+        <div className="space-y-4">
+          <div className="flex items-center space-x-2">
+            <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
+            <h3 className="text-lg font-semibold text-gray-900">Type of Forest Rights Claim</h3>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {(['IFR', 'CFRR', 'CR'] as const).map((type) => (
+              <label key={type} className="cursor-pointer">
+                <input
+                  type="radio"
+                  name="claimType"
+                  value={type}
+                  checked={formData.claimType === type}
+                  onChange={handleInputChange}
+                  className="sr-only"
+                />
+                <div className={`p-4 rounded-lg border-2 text-center transition-all hover:shadow-sm ${
+                  formData.claimType === type 
+                    ? 'border-emerald-500 bg-emerald-50 text-emerald-700 shadow-sm' 
+                    : 'border-gray-200 hover:border-gray-300 bg-white'
+                }`}>
+                  <div className="font-medium mb-2">
+                    {type === 'IFR' && 'Individual Forest Rights'}
+                    {type === 'CFRR' && 'Community Forest Resource Rights'}
+                    {type === 'CR' && 'Community Rights'}
                   </div>
-                </label>
-              ))}
-            </div>
+                  <div className="text-xs text-gray-600">
+                    {getClaimTypeDescription(type)}
+                  </div>
+                </div>
+              </label>
+            ))}
           </div>
         </div>
 
         {/* Personal Information Section */}
-        <div className="bg-gray-50 p-6 rounded-lg border border-gray-200">
-          <h3 className="text-lg font-semibold text-gray-900 mb-4">Personal Information</h3>
-          <div className="space-y-4">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div>
-                <label htmlFor="guardianName" className="block text-sm font-medium text-gray-700 mb-1">
-                  Your Name <span className="text-red-500">*</span>
-                </label>
-                <input
-                  type="text"
-                  id="guardianName"
-                  name="guardianName"
-                  value={formData.guardianName}
-                  onChange={handleInputChange}
-                  className="mt-1 block w-full rounded-lg border border-gray-300 px-4 py-2.5 bg-white focus:border-green-500 focus:outline-none focus:ring-1 focus:ring-green-500 transition-colors"
-                  placeholder="Enter your full name"
-                  required
-                />
-              </div>
-
-              <div>
-                <label htmlFor="tribalGroup" className="block text-sm font-medium text-gray-700 mb-1">
-                  Caste / Tribal Group <span className="text-red-500">*</span>
-                </label>
-                <input
-                  type="text"
-                  id="tribalGroup"
-                  name="tribalGroup"
-                  value={formData.tribalGroup}
-                  onChange={handleInputChange}
-                  className="mt-1 block w-full rounded-lg border border-gray-300 px-4 py-2.5 bg-white focus:border-green-500 focus:outline-none focus:ring-1 focus:ring-green-500 transition-colors"
-                  placeholder="e.g., Kondh, Saura, etc."
-                  required
-                />
-              </div>
+        <div className="space-y-4">
+          <div className="flex items-center space-x-2">
+            <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
+            <h3 className="text-lg font-semibold text-gray-900">Personal Information</h3>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <label htmlFor="guardianName" className="block text-sm font-medium text-gray-700 mb-2">
+                Your Name <span className="text-red-500">*</span>
+              </label>
+              <input
+                type="text"
+                id="guardianName"
+                name="guardianName"
+                value={formData.guardianName}
+                onChange={handleInputChange}
+                className="block w-full rounded-lg border border-gray-300 px-4 py-3 bg-white focus:border-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 transition-colors"
+                placeholder="Enter your full name"
+                required
+              />
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div>
-                <label htmlFor="gender" className="block text-sm font-medium text-gray-700 mb-1">
-                  Gender <span className="text-red-500">*</span>
-                </label>
-                <select
-                  id="gender"
-                  name="gender"
-                  value={formData.gender}
-                  onChange={handleInputChange}
-                  className="mt-1 block w-full rounded-lg border border-gray-300 px-4 py-2.5 bg-white focus:border-green-500 focus:outline-none focus:ring-1 focus:ring-green-500 transition-colors"
-                  required
-                >
-                  <option value="">Select Gender</option>
-                  <option value="male">Male</option>
-                  <option value="female">Female</option>
-                  <option value="other">Other</option>
-                </select>
-              </div>
+            <div>
+              <label htmlFor="tribalGroup" className="block text-sm font-medium text-gray-700 mb-2">
+                Caste / Tribal Group <span className="text-red-500">*</span>
+              </label>
+              <input
+                type="text"
+                id="tribalGroup"
+                name="tribalGroup"
+                value={formData.tribalGroup}
+                onChange={handleInputChange}
+                className="block w-full rounded-lg border border-gray-300 px-4 py-3 bg-white focus:border-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 transition-colors"
+                placeholder="e.g., Kondh, Saura, etc."
+                required
+              />
+            </div>
 
-              <div>
-                <label htmlFor="age" className="block text-sm font-medium text-gray-700 mb-1">
-                  Age <span className="text-red-500">*</span>
-                </label>
-                <input
-                  type="number"
-                  id="age"
-                  name="age"
-                  value={formData.age}
-                  onChange={handleInputChange}
-                  min="18"
-                  max="120"
-                  className="mt-1 block w-full rounded-lg border border-gray-300 px-4 py-2.5 bg-white focus:border-green-500 focus:outline-none focus:ring-1 focus:ring-green-500 transition-colors"
-                  placeholder="Enter age"
-                  required
-                />
-              </div>
+            <div>
+              <label htmlFor="gender" className="block text-sm font-medium text-gray-700 mb-2">
+                Gender <span className="text-red-500">*</span>
+              </label>
+              <select
+                id="gender"
+                name="gender"
+                value={formData.gender}
+                onChange={handleInputChange}
+                className="block w-full rounded-lg border border-gray-300 px-4 py-3 bg-white focus:border-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 transition-colors"
+                required
+              >
+                <option value="">Select Gender</option>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+
+            <div>
+              <label htmlFor="age" className="block text-sm font-medium text-gray-700 mb-2">
+                Age <span className="text-red-500">*</span>
+              </label>
+              <input
+                type="number"
+                id="age"
+                name="age"
+                value={formData.age}
+                onChange={handleInputChange}
+                min="18"
+                max="120"
+                className="block w-full rounded-lg border border-gray-300 px-4 py-3 bg-white focus:border-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 transition-colors"
+                placeholder="Enter age"
+                required
+              />
             </div>
           </div>
         </div>
 
         {/* Location Information Section */}
-        <div className="bg-gray-50 p-6 rounded-lg border border-gray-200">
-          <h3 className="text-lg font-semibold text-gray-900 mb-4">Location Details</h3>
+        <div className="space-y-4">
+          <div className="flex items-center space-x-2">
+            <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
+            <h3 className="text-lg font-semibold text-gray-900">Location Details</h3>
+          </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">Village</label>
-              <div className="px-4 py-2.5 bg-gray-100 rounded-lg border border-gray-200 text-gray-700 font-medium">
+              <div className="px-4 py-3 bg-gray-50 rounded-lg border border-gray-200 text-gray-700 font-medium">
                 Podochuanpadar
               </div>
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">District</label>
-              <div className="px-4 py-2.5 bg-gray-100 rounded-lg border border-gray-200 text-gray-700 font-medium">
+              <div className="px-4 py-3 bg-gray-50 rounded-lg border border-gray-200 text-gray-700 font-medium">
                 Rayagada
               </div>
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">State</label>
-              <div className="px-4 py-2.5 bg-gray-100 rounded-lg border border-gray-200 text-gray-700 font-medium">
+              <div className="px-4 py-3 bg-gray-50 rounded-lg border border-gray-200 text-gray-700 font-medium">
                 Odisha
               </div>
             </div>
@@ -411,81 +414,85 @@ const FraClaimForm: FC = () => {
         </div>
 
         {/* Land Information Section */}
-        <div className="bg-gray-50 p-6 rounded-lg border border-gray-200">
-          <h3 className="text-lg font-semibold text-gray-900 mb-4">Land Information</h3>
-          <div className="space-y-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div>
-                <label htmlFor="landArea" className="block text-sm font-medium text-gray-700 mb-2">
-                  Land Area <span className="text-red-500">*</span>
-                </label>
-                <div className="relative">
-                  <input
-                    type="number"
-                    id="landArea"
-                    name="landArea"
-                    value={formData.landArea}
-                    onChange={handleInputChange}
-                    step="0.01"
-                    min="0"
-                    className="block w-full rounded-lg border border-gray-300 pl-4 pr-12 py-2.5 bg-white focus:border-green-500 focus:outline-none focus:ring-1 focus:ring-green-500 transition-colors"
-                    placeholder="0.00"
-                    required
-                  />
-                  <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none text-gray-500">
-                    {formData.landUnit === 'hectares' ? 'ha' : 'ac'}
-                  </div>
+        <div className="space-y-4">
+          <div className="flex items-center space-x-2">
+            <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
+            <h3 className="text-lg font-semibold text-gray-900">Land Information</h3>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <label htmlFor="landArea" className="block text-sm font-medium text-gray-700 mb-2">
+                Land Area <span className="text-red-500">*</span>
+              </label>
+              <div className="relative">
+                <input
+                  type="number"
+                  id="landArea"
+                  name="landArea"
+                  value={formData.landArea}
+                  onChange={handleInputChange}
+                  step="0.01"
+                  min="0"
+                  className="block w-full rounded-lg border border-gray-300 pl-4 pr-12 py-3 bg-white focus:border-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 transition-colors"
+                  placeholder="0.00"
+                  required
+                />
+                <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none text-gray-500">
+                  {formData.landUnit === 'hectares' ? 'ha' : 'ac'}
                 </div>
               </div>
-              <div>
-                <label htmlFor="landUnit" className="block text-sm font-medium text-gray-700 mb-2">Unit</label>
-                <select
-                  id="landUnit"
-                  name="landUnit"
-                  value={formData.landUnit}
-                  onChange={handleInputChange}
-                  className="block w-full rounded-lg border border-gray-300 px-4 py-2.5 bg-white focus:border-green-500 focus:outline-none focus:ring-1 focus:ring-green-500 transition-colors"
-                >
-                  <option value="hectares">Hectares</option>
-                  <option value="acres">Acres</option>
-                </select>
-              </div>
             </div>
-
-            {formData.claimType === 'IFR' && formData.landArea && (
-              <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-                <p className="text-sm text-blue-700">
-                  <strong>Note:</strong> Individual Forest Rights claims are limited to a maximum of 4 hectares.
-                  {formData.landUnit === 'acres' && (
-                    <span className="block mt-1">
-                      Your claim of {formData.landArea} acres equals approximately {(parseFloat(formData.landArea) * 0.4047).toFixed(2)} hectares.
-                    </span>
-                  )}
-                </p>
-              </div>
-            )}
-
             <div>
-              <label htmlFor="surveyNumber" className="block text-sm font-medium text-gray-700 mb-2">
-                Survey Number / GPS Coordinates
-              </label>
-              <input
-                type="text"
-                id="surveyNumber"
-                name="surveyNumber"
-                value={formData.surveyNumber}
+              <label htmlFor="landUnit" className="block text-sm font-medium text-gray-700 mb-2">Unit</label>
+              <select
+                id="landUnit"
+                name="landUnit"
+                value={formData.landUnit}
                 onChange={handleInputChange}
-                className="block w-full rounded-lg border border-gray-300 px-4 py-2.5 bg-white focus:border-green-500 focus:outline-none focus:ring-1 focus:ring-green-500 transition-colors"
-                placeholder="Enter survey number or coordinates"
-              />
+                className="block w-full rounded-lg border border-gray-300 px-4 py-3 bg-white focus:border-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 transition-colors"
+              >
+                <option value="hectares">Hectares</option>
+                <option value="acres">Acres</option>
+              </select>
             </div>
+          </div>
+
+          {formData.claimType === 'IFR' && formData.landArea && (
+            <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+              <p className="text-sm text-blue-700">
+                <strong>Note:</strong> Individual Forest Rights claims are limited to a maximum of 4 hectares.
+                {formData.landUnit === 'acres' && (
+                  <span className="block mt-1">
+                    Your claim of {formData.landArea} acres equals approximately {(parseFloat(formData.landArea) * 0.4047).toFixed(2)} hectares.
+                  </span>
+                )}
+              </p>
+            </div>
+          )}
+
+          <div>
+            <label htmlFor="surveyNumber" className="block text-sm font-medium text-gray-700 mb-2">
+              Survey Number / GPS Coordinates
+            </label>
+            <input
+              type="text"
+              id="surveyNumber"
+              name="surveyNumber"
+              value={formData.surveyNumber}
+              onChange={handleInputChange}
+              className="block w-full rounded-lg border border-gray-300 px-4 py-3 bg-white focus:border-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 transition-colors"
+              placeholder="Enter survey number or coordinates"
+            />
           </div>
         </div>
 
         {/* Document Uploads */}
-        <div className="bg-gray-50 p-6 rounded-lg border border-gray-200">
-          <h3 className="text-lg font-semibold text-gray-900 mb-4">Required Documents</h3>
-          <p className="text-gray-600 text-sm mb-6">Please upload clear, legible scanned copies or photos of the following documents</p>
+        <div className="space-y-4">
+          <div className="flex items-center space-x-2">
+            <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
+            <h3 className="text-lg font-semibold text-gray-900">Required Documents</h3>
+          </div>
+          <p className="text-gray-600 text-sm">Please upload clear, legible scanned copies or photos of the following documents</p>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {[
@@ -507,7 +514,7 @@ const FraClaimForm: FC = () => {
         </div>
 
         {/* Submit Button */}
-        <div className="bg-gray-50 p-6 rounded-lg border border-gray-200">
+        <div className="bg-gray-50 rounded-lg p-6 border border-gray-200">
           <div className="flex items-center justify-between mb-4">
             <div>
               <h3 className="text-lg font-semibold text-gray-900">Submit Your Claim</h3>
@@ -518,10 +525,10 @@ const FraClaimForm: FC = () => {
               disabled={isSubmitting}
               className={`
                 px-8 py-3 text-white text-lg font-medium rounded-lg
-                transition-colors relative min-w-[150px]
+                transition-all relative min-w-[150px] shadow-sm
                 ${isSubmitting 
-                  ? 'bg-green-500 cursor-not-allowed'
-                  : 'bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2'
+                  ? 'bg-emerald-500 cursor-not-allowed'
+                  : 'bg-emerald-600 hover:bg-emerald-700 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2'
                 }
               `}
             >
