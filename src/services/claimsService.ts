@@ -1,3 +1,20 @@
+export interface NewClaimData {
+  claimType: 'IFR' | 'CFRR' | 'CR';
+  guardianName: string;
+  gender: string;
+  age: string;
+  tribalGroup: string;
+  landArea: string;
+  landUnit: 'hectares' | 'acres';
+  surveyNumber: string;
+  documents: {
+    identityProof: File | null;
+    tribeCertificate: File | null;
+    fraClaimForm: File | null;
+    gramSabhaResolution: File | null;
+  };
+}
+
 export interface Claim {
   id?: string;
   user_id: string;
@@ -9,8 +26,12 @@ export interface Claim {
   created_at?: string;
   approved_at?: string;
   applicantName?: string;
-  claimType?: string;
+  claimType?: 'IFR' | 'CFRR' | 'CR';
   documents?: string[];
+  tribalGroup?: string;
+  guardianName?: string;
+  gender?: string;
+  age?: string;
 }
 
 export interface ClaimWithUser extends Claim {
@@ -25,20 +46,24 @@ let mockClaims: Claim[] = [
   {
     id: 'claim-1',
     user_id: 'public-1',
-    village: 'Poduchunapadar',
+    village: 'Podochunapadar',
     area: 2.5,
     coordinates: '19.9067, 83.1636',
     document_url: 'https://example.com/doc1.pdf',
     status: 'pending',
     created_at: new Date(Date.now() - 86400000).toISOString(),
     applicantName: 'Rajesh Kumar',
-    claimType: 'Individual',
-    documents: ['Identity Proof', 'Land Document', 'Village Certificate']
+    claimType: 'IFR',
+    documents: ['identityProof', 'tribeCertificate', 'fraClaimForm', 'gramSabhaResolution'],
+    tribalGroup: 'Gond',
+    guardianName: 'Mohan Kumar',
+    gender: 'male',
+    age: '35'
   },
   {
     id: 'claim-2',
     user_id: 'public-2',
-    village: 'Poduchunapadar',
+    village: 'Podochunapadar',
     area: 1.8,
     coordinates: '19.9067, 83.1636',
     document_url: 'https://example.com/doc2.pdf',
@@ -46,34 +71,46 @@ let mockClaims: Claim[] = [
     created_at: new Date(Date.now() - 172800000).toISOString(),
     approved_at: new Date(Date.now() - 86400000).toISOString(),
     applicantName: 'Priya Sharma',
-    claimType: 'Individual',
-    documents: ['Identity Proof', 'Land Document']
+    claimType: 'CFRR',
+    documents: ['identityProof', 'tribeCertificate', 'fraClaimForm', 'gramSabhaResolution'],
+    tribalGroup: 'Kandha',
+    guardianName: 'Suresh Sharma',
+    gender: 'female',
+    age: '42'
   },
   {
     id: 'claim-3',
     user_id: 'public-3',
-    village: 'Poduchunapadar',
+    village: 'Podochunapadar',
     area: 3.2,
     coordinates: '19.9067, 83.1636',
     document_url: 'https://example.com/doc3.pdf',
     status: 'rejected',
     created_at: new Date(Date.now() - 259200000).toISOString(),
     applicantName: 'Amit Singh',
-    claimType: 'Community',
-    documents: ['Community Certificate', 'Land Document']
+    claimType: 'CR',
+    documents: ['identityProof', 'fraClaimForm'],
+    tribalGroup: 'Gond',
+    guardianName: 'Ramesh Singh',
+    gender: 'male',
+    age: '29'
   },
   {
     id: 'claim-4',
     user_id: 'public-4',
-    village: 'Poduchunapadar',
-    area: 4.5,
+    village: 'Podochunapadar',
+    area: 1.5,
     coordinates: '19.9067, 83.1636',
     document_url: 'https://example.com/doc4.pdf',
     status: 'pending',
-    created_at: new Date(Date.now() - 43200000).toISOString(),
-    applicantName: 'Sita Gond',
-    claimType: 'Individual',
-    documents: ['Identity Proof', 'Land Document', 'Revenue Record']
+    created_at: new Date(Date.now() - 345600000).toISOString(),
+    applicantName: 'Sita Kumari',
+    claimType: 'IFR',
+    documents: ['identityProof', 'tribeCertificate', 'fraClaimForm'],
+    tribalGroup: 'Kandha',
+    guardianName: 'Raju Kumar',
+    gender: 'female',
+    age: '38'
   }
 ];
 
@@ -102,32 +139,32 @@ export const claimsService = {
     return newClaim;
   },
 
-  // Submit a new claim (alias for createClaim with additional fields)
-  async submitClaim(claimData: {
-    applicantName: string;
-    age: number;
-    village: string;
-    area: number;
-    coordinates: string;
-    claimType: string;
-    documents: string[];
-    userId: string;
-    status: string;
-  }): Promise<Claim> {
+  // Submit a new claim (handles NewClaimData format)
+  async submitClaim(claimData: NewClaimData): Promise<Claim> {
     // Simulate network delay
     await new Promise(resolve => setTimeout(resolve, 500));
+
+    // Convert landArea to correct unit (hectares)
+    const areaInHectares = claimData.landUnit === 'acres' 
+      ? parseFloat(claimData.landArea) * 0.404686 // Convert acres to hectares
+      : parseFloat(claimData.landArea);
     
     const newClaim: Claim = {
       id: `claim-${Date.now()}`,
-      user_id: claimData.userId,
-      village: claimData.village,
-      area: claimData.area,
-      coordinates: claimData.coordinates,
+      user_id: 'current-user', // In real app, this would come from auth context
+      village: 'Podochunapadar', // Default village for mock data
+      area: areaInHectares,
+      coordinates: claimData.surveyNumber || '',
       status: 'pending',
       created_at: new Date().toISOString(),
-      applicantName: claimData.applicantName,
       claimType: claimData.claimType,
-      documents: claimData.documents
+      documents: Object.entries(claimData.documents)
+        .filter(([_, file]) => file !== null)
+        .map(([key]) => key),
+      tribalGroup: claimData.tribalGroup,
+      guardianName: claimData.guardianName,
+      gender: claimData.gender,
+      age: claimData.age
     };
     
     mockClaims.unshift(newClaim);
