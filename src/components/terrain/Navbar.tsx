@@ -79,6 +79,7 @@ export const Navbar: React.FC<NavbarProps> = ({ activeSection, onSectionChange }
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [showLogoutConfirmation, setShowLogoutConfirmation] = useState(false);
+  const [isLoggingOut, setIsLoggingOut] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -95,14 +96,36 @@ export const Navbar: React.FC<NavbarProps> = ({ activeSection, onSectionChange }
     setIsMobileMenuOpen(false); // Close mobile menu if open
   };
 
-  // This is your original working logout function
+  // Enhanced logout function with proper session clearing
   const handleLogoutConfirm = async () => {
-    await signOut();
-    setShowLogoutConfirmation(false);
+    setIsLoggingOut(true);
+    
+    try {
+      console.log('Starting logout process...');
+      
+      // Call the signOut function
+      const result = await signOut();
+      
+      console.log('SignOut result:', result);
+      
+      // Close the modal
+      setShowLogoutConfirmation(false);
+      
+      // No need for page reload since we're properly clearing session
+      console.log('Logout completed - user should be redirected to login');
+      
+    } catch (error) {
+      console.error('Logout error:', error);
+      alert('Failed to logout. Please try again.');
+    } finally {
+      setIsLoggingOut(false);
+    }
   };
 
   const handleLogoutCancel = () => {
-    setShowLogoutConfirmation(false);
+    if (!isLoggingOut) {
+      setShowLogoutConfirmation(false);
+    }
   };
 
   const toggleMobileMenu = () => {
@@ -190,10 +213,11 @@ export const Navbar: React.FC<NavbarProps> = ({ activeSection, onSectionChange }
               </div>
               <button
                 onClick={handleLogoutClick}
-                className="flex items-center space-x-2 w-full px-3 py-2 text-forest-medium hover:text-forest-deep hover:bg-forest-sage/5 rounded-xl transition-all duration-300"
+                disabled={isLoggingOut}
+                className="flex items-center space-x-2 w-full px-3 py-2 text-forest-medium hover:text-forest-deep hover:bg-forest-sage/5 rounded-xl transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 <LogOut className="h-4 w-4" />
-                <span className="text-sm">Logout</span>
+                <span className="text-sm">{isLoggingOut ? 'Logging out...' : 'Logout'}</span>
               </button>
             </div>
           </div>
@@ -207,6 +231,7 @@ export const Navbar: React.FC<NavbarProps> = ({ activeSection, onSectionChange }
         onCancel={handleLogoutCancel}
         title="Confirm Logout"
         message="Are you sure you want to log out? You will need to sign in again to access the system."
+        isLoading={isLoggingOut}
       />
     </>
   );

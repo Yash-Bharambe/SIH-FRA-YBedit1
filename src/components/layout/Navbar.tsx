@@ -109,7 +109,7 @@ export const Navbar: React.FC<NavbarProps> = ({ activeSection, onSectionChange }
     setIsMobileMenuOpen(false); // Close mobile menu if open
   };
 
-  // This is your original working logout function with better error handling
+  // Enhanced logout function with proper session clearing
   const handleLogoutConfirm = async () => {
     setIsLoggingOut(true);
     
@@ -124,11 +124,8 @@ export const Navbar: React.FC<NavbarProps> = ({ activeSection, onSectionChange }
       // Close the modal
       setShowLogoutConfirmation(false);
       
-      // Add a small delay to ensure the signOut completes
-      setTimeout(() => {
-        // Force a page reload to ensure complete logout
-        window.location.reload();
-      }, 100);
+      // No need for page reload since we're properly clearing session
+      console.log('Logout completed - user should be redirected to login');
       
     } catch (error) {
       console.error('Logout error:', error);

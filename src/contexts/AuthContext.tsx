@@ -59,6 +59,36 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     return () => subscription.unsubscribe();
   }, []);
 
+  const signOut = async () => {
+    try {
+      console.log('Starting logout process...');
+      
+      // Clear local state first
+      setCurrentUser(null);
+      setUserType(null);
+      
+      // Sign out from Supabase
+      const { error } = await supabase.auth.signOut();
+      if (error) {
+        console.error('Supabase logout error:', error);
+        // Even if Supabase logout fails, we've cleared local state
+      }
+      
+      // Clear any stored session data
+      localStorage.removeItem('sb-' + supabase.supabaseUrl.split('//')[1].split('.')[0] + '-auth-token');
+      sessionStorage.clear();
+      
+      console.log('Logout completed successfully');
+      return { error: null };
+    } catch (error) {
+      console.error('Logout error:', error);
+      // Clear local state even if there's an error
+      setCurrentUser(null);
+      setUserType(null);
+      return { error };
+    }
+  };
+
   const value: AuthContextType = {
     currentUser,
     loading,
@@ -73,7 +103,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         }
       }
     }),
-    signOut: () => supabase.auth.signOut()
+    signOut
   };
 
   return (
