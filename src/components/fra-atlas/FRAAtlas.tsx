@@ -9,13 +9,13 @@ const mockFRAData = [
     type: 'IFR',
     status: 'granted',
     applicant: 'Ramesh Gond',
-    village: 'Poduchunapadar',
-    block: 'Kalahandi',
-    district: 'Kalahandi',
+    village: 'Podochunapadar',
+    block: 'Kalyanasingpur',
+    district: 'Rayagada',
     state: 'Odisha',
     tribalGroup: 'Gond',
     areaHectares: 2.5,
-    coordinates: { lat: 19.9067, lng: 83.1636 },
+    coordinates: { lat: 19.426107, lng: 83.273541 },
     grantDate: '2024-01-15',
     documentUrl: 'https://example.com/documents/ramesh_gond_claim.pdf'
   },
@@ -25,13 +25,13 @@ const mockFRAData = [
     type: 'CFR',
     status: 'pending',
     applicant: 'Poduchunapadar Tribal Committee',
-    village: 'Poduchunapadar',
-    block: 'Kalahandi',
-    district: 'Kalahandi',
+    village: 'Podochunapadar',
+    block: 'Kalyanasingpur',
+    district: 'Rayagada',
     state: 'Odisha',
     tribalGroup: 'Kandha',
     areaHectares: 45.8,
-    coordinates: { lat: 19.9067, lng: 83.1636 },
+    coordinates: { lat: 19.426107, lng: 83.273541 },
     grantDate: null,
     documentUrl: 'https://example.com/documents/tribal_committee_claim.pdf'
   },
@@ -41,13 +41,13 @@ const mockFRAData = [
     type: 'CR',
     status: 'granted',
     applicant: 'Poduchunapadar Community',
-    village: 'Poduchunapadar',
-    block: 'Kalahandi',
-    district: 'Kalahandi',
+    village: 'Podochunapadar',
+    block: 'Kalyanasingpur',
+    district: 'Rayagada',
     state: 'Odisha',
     tribalGroup: 'Gond',
     areaHectares: 12.3,
-    coordinates: { lat: 19.9067, lng: 83.1636 },
+    coordinates: { lat: 19.426107, lng: 83.273541 },
     grantDate: '2024-01-10',
     documentUrl: 'https://example.com/documents/community_rights_claim.pdf'
   },
@@ -57,13 +57,13 @@ const mockFRAData = [
     type: 'IFR',
     status: 'rejected',
     applicant: 'Lakshman Gond',
-    village: 'Poduchunapadar',
-    block: 'Kalahandi',
-    district: 'Kalahandi',
+    village: 'Podochunapadar',
+    block: 'Kalyanasingpur',
+    district: 'Rayagada',
     state: 'Odisha',
     tribalGroup: 'Gond',
     areaHectares: 1.8,
-    coordinates: { lat: 19.9067, lng: 83.1636 },
+    coordinates: { lat: 19.426107, lng: 83.273541 },
     grantDate: null,
     documentUrl: 'https://example.com/documents/lakshman_gond_claim.pdf'
   },
@@ -73,13 +73,13 @@ const mockFRAData = [
     type: 'IFR',
     status: 'granted',
     applicant: 'Sita Gond',
-    village: 'Poduchunapadar',
-    block: 'Kalahandi',
-    district: 'Kalahandi',
+    village: 'Podochunapadar',
+    block: 'Kalyanasingpur',
+    district: 'Rayagada',
     state: 'Odisha',
     tribalGroup: 'Gond',
     areaHectares: 3.2,
-    coordinates: { lat: 19.9067, lng: 83.1636 },
+    coordinates: { lat: 19.426107, lng: 83.273541 },
     grantDate: '2024-02-01',
     documentUrl: 'https://example.com/documents/sita_gond_claim.pdf'
   }
@@ -121,26 +121,26 @@ export const FRAAtlas: React.FC = () => {
   const getStatusColor = (status: string) => {
     switch (status) {
       case 'granted':
-        return 'forest-badge-success';
+        return 'bg-green-100 text-green-800';
       case 'pending':
-        return 'forest-badge-warning';
+        return 'bg-amber-100 text-amber-800';
       case 'rejected':
-        return 'forest-badge-error';
+        return 'bg-red-100 text-red-800';
       default:
-        return 'forest-badge-secondary';
+        return 'bg-gray-100 text-gray-800';
     }
   };
 
   const getTypeColor = (type: string) => {
     switch (type) {
       case 'IFR':
-        return 'forest-badge bg-forest-sky text-forest-primary';
+        return 'bg-emerald-100 text-emerald-800';
       case 'CR':
-        return 'forest-badge bg-forest-mint/20 text-forest-accent';
+        return 'bg-blue-100 text-blue-800';
       case 'CFR':
-        return 'forest-badge-success';
+        return 'bg-green-100 text-green-800';
       default:
-        return 'forest-badge-secondary';
+        return 'bg-gray-100 text-gray-800';
     }
   };
 
@@ -177,20 +177,33 @@ export const FRAAtlas: React.FC = () => {
   };
 
   return (
-    <div className="space-y-8 animate-forest-fade-in">
+    <div className="space-y-8">
       {/* Header */}
-      <div className="forest-card-elevated bg-gradient-to-r from-forest-light/10 to-forest-accent/10 border-forest-accent/30">
+      <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-4xl font-bold text-forest-primary mb-3">FRA Atlas - Poduchunapadar</h1>
-            <p className="text-forest-secondary text-xl">Interactive mapping of Forest Rights Act claims and granted titles</p>
+            <div className="flex items-center space-x-3 mb-3">
+              <div className="p-3 bg-emerald-100 rounded-lg">
+                <Map className="h-8 w-8 text-emerald-600" />
+              </div>
+              <div>
+                <h1 className="text-3xl font-bold text-gray-900">FRA Atlas - Podochunapadar</h1>
+                <p className="text-gray-600 text-lg">Interactive mapping of Forest Rights Act claims and granted titles</p>
+              </div>
+            </div>
+            <div className="flex items-center space-x-4 text-sm text-gray-600">
+              <div className="flex items-center space-x-1">
+                <MapPin className="h-4 w-4" />
+                <span>Odisha &gt; Rayagada &gt; Kalyanasingpur &gt; Podochunapadar (765015)</span>
+              </div>
+            </div>
           </div>
           <div className="flex items-center space-x-4">
             <button 
               onClick={handleDownloadData}
-              className="forest-button-primary flex items-center space-x-3"
+              className="inline-flex items-center px-4 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 transition-colors"
             >
-              <Download className="h-5 w-5" />
+              <Download className="h-4 w-4 mr-2" />
               <span>Download Data</span>
             </button>
           </div>
@@ -198,34 +211,33 @@ export const FRAAtlas: React.FC = () => {
       </div>
 
       {/* Filters */}
-      <div className="forest-chart">
-        <div className="forest-chart-header">
-          <div className="flex items-center space-x-3">
-            <div className="p-2 bg-gradient-primary rounded-lg">
-              <Filter className="h-6 w-6 text-white" />
-            </div>
-            <h3 className="forest-chart-title">Filter FRA Claims</h3>
+      <div className="bg-white rounded-lg shadow-sm border border-gray-200">
+        <div className="p-6 border-b border-gray-200">
+          <div className="flex items-center space-x-2">
+            <Filter className="h-5 w-5 text-gray-600" />
+            <h3 className="text-lg font-semibold text-gray-900">Filter FRA Claims</h3>
           </div>
         </div>
         
+        <div className="p-6">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-          <div className="forest-form-group">
-            <label className="forest-form-label">State</label>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">State</label>
             <select 
               value={selectedState}
               onChange={(e) => setSelectedState(e.target.value)}
-              className="forest-select"
+                className="block w-full rounded-lg border border-gray-300 px-4 py-3 bg-white focus:border-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 transition-colors"
             >
               <option value="Odisha">Odisha</option>
             </select>
           </div>
 
-          <div className="forest-form-group">
-            <label className="forest-form-label">Claim Type</label>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">Claim Type</label>
             <select 
               value={selectedType}
               onChange={(e) => setSelectedType(e.target.value)}
-              className="forest-select"
+                className="block w-full rounded-lg border border-gray-300 px-4 py-3 bg-white focus:border-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 transition-colors"
             >
               <option value="all">All Types</option>
               <option value="IFR">Individual Forest Rights</option>
@@ -234,12 +246,12 @@ export const FRAAtlas: React.FC = () => {
             </select>
           </div>
 
-          <div className="forest-form-group">
-            <label className="forest-form-label">Status</label>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">Status</label>
             <select 
               value={selectedStatus}
               onChange={(e) => setSelectedStatus(e.target.value)}
-              className="forest-select"
+                className="block w-full rounded-lg border border-gray-300 px-4 py-3 bg-white focus:border-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 transition-colors"
             >
               <option value="all">All Status</option>
               <option value="granted">Granted</option>
@@ -248,135 +260,219 @@ export const FRAAtlas: React.FC = () => {
             </select>
           </div>
 
-          <div className="forest-form-group">
-            <label className="forest-form-label">Search</label>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">Search</label>
             <div className="relative">
-              <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-forest-accent pointer-events-none" />
+                <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400 pointer-events-none" />
               <input
                 type="text"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 placeholder="Search claims..."
-                className="forest-input pl-12"
+                  className="block w-full rounded-lg border border-gray-300 pl-12 pr-4 py-3 bg-white focus:border-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 transition-colors"
               />
+              </div>
             </div>
           </div>
         </div>
       </div>
 
       {/* Interactive WebGIS Map */}
-      <div className="forest-chart">
-        <div className="forest-chart-header">
-          <div className="flex items-center space-x-3">
-            <div className="p-2 bg-gradient-primary rounded-lg">
-              <Map className="h-6 w-6 text-white" />
-            </div>
-            <h3 className="forest-chart-title">Interactive WebGIS Map</h3>
+      <div className="bg-white rounded-lg shadow-sm border border-gray-200">
+        <div className="p-6 border-b border-gray-200">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center space-x-2">
+              <Map className="h-5 w-5 text-gray-600" />
+              <h3 className="text-lg font-semibold text-gray-900">Interactive WebGIS Map</h3>
           </div>
           <div className="flex items-center space-x-3">
-            <div className="text-sm text-forest-secondary">Coverage:</div>
-            <div className="forest-badge-success">
-              <div className="w-3 h-3 bg-forest-accent rounded-full animate-forest-pulse mr-2"></div>
+              <div className="text-sm text-gray-600">Coverage:</div>
+              <div className="flex items-center px-3 py-1 bg-emerald-100 text-emerald-700 rounded-full text-sm">
+                <div className="w-2 h-2 bg-emerald-500 rounded-full mr-2"></div>
               <span>1 Village Active</span>
+              </div>
             </div>
           </div>
         </div>
         
-        <div className="forest-map relative bg-gradient-to-br from-forest-sky to-forest-light/20 h-[700px] mb-6 overflow-hidden rounded-2xl border-2 border-forest-accent/20">
-     {/* Village Map iframe */}
+        <div className="relative h-[700px] overflow-hidden">
+          {/* Map Integration */}
+          <div className="w-full h-full rounded-lg relative">
+            {/* Primary: OpenStreetMap with village marker */}
 <iframe
-  src="https://villagemap.in/odisha/rayagada/kalyanasingpur/4682700.html"
-  className="w-full h-full border-0 rounded-2xl"
-  title="Poduchunapadar Village Map"
+              src="https://www.openstreetmap.org/export/embed.html?bbox=83.253541,19.316107,83.293541,19.536107&layer=mapnik&marker=19.426107,83.273541"
+              className="w-full h-full border-0 rounded-lg"
+              title="Podochunapadar Village - OpenStreetMap"
   allowFullScreen
-/>
-
-
-
-{/* Enhanced Village Information Panel */}
-<div className="absolute bottom-6 left-6 bg-forest-primary/90 backdrop-blur-md px-6 py-4 rounded-2xl shadow-xl border border-forest-accent/30 z-20">
-  <div className="text-sm font-bold mb-3 flex items-center text-forest-accent">
-    <TreePine className="h-4 w-4 mr-2 text-forest-accent" />
+              style={{ minHeight: '700px' }}
+            />
+            
+            {/* Map overlay with additional information */}
+            <div className="absolute top-4 right-4 bg-white/95 backdrop-blur-sm px-4 py-2 rounded-lg shadow-lg border border-gray-200 z-10">
+              <div className="flex items-center space-x-2 text-sm">
+                <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
+                <span className="font-semibold text-gray-700">Podochunapadar Village</span>
+              </div>
+            </div>
+          </div>
+          
+          {/* Village Information Panel */}
+          <div className="absolute bottom-6 left-6 bg-white/95 backdrop-blur-sm px-6 py-4 rounded-lg shadow-lg border border-gray-200 z-20">
+            <div className="text-sm font-bold mb-3 flex items-center text-emerald-600">
+              <TreePine className="h-4 w-4 mr-2" />
     Village Details
   </div>
   <div className="space-y-2">
     <div className="flex items-center space-x-3">
-      <div className="w-3 h-3 bg-forest-accent rounded-full"></div>
-      <span className="text-sm font-semibold text-forest-light">Poduchunapadar</span>
+                <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
+                <span className="text-sm font-semibold text-gray-700">Podochunapadar</span>
     </div>
     <div className="flex items-center space-x-3">
-      <div className="w-3 h-3 bg-forest-light rounded-full"></div>
-      <span className="text-sm font-semibold text-forest-light">Kalahandi District</span>
+                <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                <span className="text-sm font-semibold text-gray-700">Rayagada District</span>
     </div>
     <div className="flex items-center space-x-3">
-      <div className="w-3 h-3 bg-forest-mint rounded-full"></div>
-      <span className="text-sm font-semibold text-forest-light">Odisha State</span>
+                <div className="w-2 h-2 bg-amber-500 rounded-full"></div>
+                <span className="text-sm font-semibold text-gray-700">Odisha State</span>
     </div>
     <div className="flex items-center space-x-3">
-      <div className="w-3 h-3 bg-earth-light rounded-full"></div>
-      <span className="text-sm font-semibold text-forest-light">Tribal Village</span>
+                <div className="w-2 h-2 bg-purple-500 rounded-full"></div>
+                <span className="text-sm font-semibold text-gray-700">Tribal Village</span>
     </div>
   </div>
 </div>
 
-          
-          {/* Enhanced Statistics Panel */}
-          <div className="absolute bottom-6 right-6 bg-white/95 backdrop-blur-md rounded-2xl p-6 shadow-2xl border border-forest-accent/20">
-            <div className="text-sm font-bold text-forest-primary mb-3 flex items-center">
+          {/* Statistics Panel */}
+          <div className="absolute bottom-6 right-6 bg-white/95 backdrop-blur-sm rounded-lg p-6 shadow-lg border border-gray-200 z-20">
+            <div className="text-sm font-bold text-gray-900 mb-3 flex items-center">
               <BarChart3 className="h-4 w-4 mr-2" />
               Village Statistics
             </div>
             <div className="grid grid-cols-2 gap-4 text-sm">
               <div className="text-center">
-                <div className="font-bold text-2xl text-forest-primary">{filteredData.length}</div>
-                <div className="text-forest-secondary">Total Claims</div>
+                <div className="font-bold text-2xl text-gray-900">{filteredData.length}</div>
+                <div className="text-gray-600">Total Claims</div>
               </div>
               <div className="text-center">
-                <div className="font-bold text-2xl text-success">
+                <div className="font-bold text-2xl text-green-600">
                   {filteredData.filter(c => c.status === 'granted').length}
                 </div>
-                <div className="text-forest-secondary">Granted</div>
+                <div className="text-gray-600">Granted</div>
               </div>
               <div className="text-center">
-                <div className="font-bold text-2xl text-warning">
+                <div className="font-bold text-2xl text-amber-600">
                   {filteredData.filter(c => c.status === 'pending').length}
                 </div>
-                <div className="text-forest-secondary">Pending</div>
+                <div className="text-gray-600">Pending</div>
               </div>
               <div className="text-center">
-                <div className="font-bold text-2xl text-error">
+                <div className="font-bold text-2xl text-red-600">
                   {filteredData.filter(c => c.status === 'rejected').length}
                 </div>
-                <div className="text-forest-secondary">Rejected</div>
+                <div className="text-gray-600">Rejected</div>
               </div>
             </div>
           </div>
         </div>
         
-        {/* Enhanced Hover Tooltip Example */}
-        <div className="forest-card-elevated bg-gradient-to-r from-forest-light/10 to-forest-accent/10 border-forest-accent/30">
+        {/* Bhuvan Map Integration Section */}
+        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+          <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center space-x-2">
+              <div className="p-2 bg-emerald-100 rounded-lg">
+                <Map className="h-5 w-5 text-emerald-600" />
+              </div>
+              <h3 className="text-lg font-semibold text-gray-900">Bhuvan Map Integration</h3>
+            </div>
+            <div className="text-sm text-gray-600">Official NRSC Mapping Service</div>
+          </div>
+          
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            {/* Bhuvan Map iframe */}
+            <div className="relative h-96 rounded-lg overflow-hidden border border-gray-200">
+              <iframe
+                src="https://bhuvan-app1.nrsc.gov.in/bhuvan/bhuvan2d.php?config=config2d&lat=19.426107&lon=83.273541&z=15&layers=B0FT0"
+                className="w-full h-full border-0"
+                title="Podochunapadar Village - Bhuvan Map"
+                allowFullScreen
+              />
+              <div className="absolute top-2 right-2 bg-emerald-600 text-white px-2 py-1 rounded text-xs font-medium">
+                Bhuvan Map
+              </div>
+            </div>
+            
+            {/* Map Information and Actions */}
+            <div className="space-y-4">
+              <div className="bg-gray-50 rounded-lg p-4">
+                <h4 className="font-semibold text-gray-900 mb-3">Map Details</h4>
+                <div className="space-y-2 text-sm">
+                  <div className="flex justify-between">
+                    <span className="text-gray-600">Service:</span>
+                    <span className="font-medium text-gray-900">Bhuvan NRSC</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-gray-600">Location:</span>
+                    <span className="font-medium text-gray-900">Podochunapadar, Rayagada</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-gray-600">Coordinates:</span>
+                    <span className="font-medium text-gray-900">19.9067°N, 83.1636°E</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-gray-600">Zoom Level:</span>
+                    <span className="font-medium text-gray-900">15 (Village Level)</span>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="space-y-2">
+                <a 
+                  href="https://bhuvan-app1.nrsc.gov.in/bhuvan/bhuvan2d.php?config=config2d&lat=19.426107&lon=83.273541&z=15&layers=B0FT0"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full inline-flex items-center justify-center px-4 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 transition-colors"
+                >
+                  <Map className="h-4 w-4 mr-2" />
+                  Open Full Bhuvan Map
+                </a>
+                <a 
+                  href="https://www.google.com/maps?q=19.426107,83.273541"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full inline-flex items-center justify-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+                >
+                  <MapPin className="h-4 w-4 mr-2" />
+                  View on Google Maps
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        {/* Village Information Card */}
+        <div className="p-6 bg-gray-50 rounded-lg">
           <div className="flex items-start space-x-4">
-            <div className="p-4 bg-gradient-primary rounded-2xl shadow-lg">
-              <MapPin className="h-8 w-8 text-white" />
+            <div className="p-4 bg-emerald-100 rounded-lg">
+              <MapPin className="h-8 w-8 text-emerald-600" />
             </div>
             <div className="flex-1">
-              <h4 className="text-xl font-semibold text-forest-primary mb-3">Village: Poduchunapadar, Kalahandi</h4>
+              <h4 className="text-xl font-semibold text-gray-900 mb-3">Village: Podochunapadar, Rayagada (765015)</h4>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
-                  <span className="text-forest-secondary font-semibold">Patta Holders:</span>
-                  <p className="text-forest-primary font-bold text-lg">Ramesh Gond, Sita Gond</p>
+                  <span className="text-gray-600 font-semibold">Patta Holders:</span>
+                  <p className="text-gray-900 font-bold text-lg">Ramesh Gond, Sita Gond</p>
                 </div>
                 <div>
-                  <span className="text-forest-secondary font-semibold">DSS Eligibility:</span>
-                  <p className="text-forest-primary font-bold text-lg">PM-KISAN, FRA</p>
+                  <span className="text-gray-600 font-semibold">DSS Eligibility:</span>
+                  <p className="text-gray-900 font-bold text-lg">PM-KISAN, FRA</p>
                 </div>
                 <div>
-                  <span className="text-forest-secondary font-semibold">Claim Type:</span>
-                  <p className="text-forest-primary font-bold text-lg">IFR - 2.5 hectares</p>
+                  <span className="text-gray-600 font-semibold">Claim Type:</span>
+                  <p className="text-gray-900 font-bold text-lg">IFR - 2.5 hectares</p>
                 </div>
                 <div>
-                  <span className="text-forest-secondary font-semibold">Status:</span>
-                  <p className="text-success font-bold text-lg">Granted (2024-01-15)</p>
+                  <span className="text-gray-600 font-semibold">Status:</span>
+                  <p className="text-green-600 font-bold text-lg">Granted (2024-01-15)</p>
                 </div>
               </div>
             </div>
@@ -385,64 +481,65 @@ export const FRAAtlas: React.FC = () => {
       </div>
 
       {/* Village-Level Progress Dashboard */}
-      <div className="forest-chart">
-        <div className="forest-chart-header">
-          <div className="flex items-center space-x-3">
-            <div className="p-2 bg-gradient-primary rounded-lg">
-              <Users className="h-6 w-6 text-white" />
+      <div className="bg-white rounded-lg shadow-sm border border-gray-200">
+        <div className="p-6 border-b border-gray-200">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center space-x-2">
+              <Users className="h-5 w-5 text-gray-600" />
+              <h3 className="text-lg font-semibold text-gray-900">Village-Level FRA Progress Dashboard</h3>
             </div>
-            <h3 className="forest-chart-title">Village-Level FRA Progress Dashboard</h3>
+            <div className="text-sm text-gray-600">
+              Podochunapadar, Rayagada District (765015)
           </div>
-          <div className="text-sm text-forest-secondary">
-            Poduchunapadar, Kalahandi District
           </div>
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-10">
+        <div className="p-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
           {/* Total Claims */}
-          <div className="forest-stat-card text-center">
-            <div className="forest-stat-value text-forest-primary">{filteredData.length}</div>
-            <div className="forest-stat-label">Total Claims</div>
-            <div className="text-xs text-forest-secondary mt-2">All Types Combined</div>
+            <div className="bg-gray-50 rounded-lg p-6 text-center">
+              <div className="text-3xl font-bold text-gray-900 mb-2">{filteredData.length}</div>
+              <div className="text-sm text-gray-600">Total Claims</div>
+              <div className="text-xs text-gray-500 mt-1">All Types Combined</div>
           </div>
           
           {/* Approved Claims */}
-          <div className="forest-stat-card text-center">
-            <div className="forest-stat-value text-success">
+            <div className="bg-gray-50 rounded-lg p-6 text-center">
+              <div className="text-3xl font-bold text-green-600 mb-2">
               {filteredData.filter(c => c.status === 'granted').length}
             </div>
-            <div className="forest-stat-label">Approved</div>
-            <div className="text-xs text-forest-secondary mt-2">
+              <div className="text-sm text-gray-600">Approved</div>
+              <div className="text-xs text-gray-500 mt-1">
               {Math.round((filteredData.filter(c => c.status === 'granted').length / filteredData.length) * 100)}% Success Rate
             </div>
           </div>
           
           {/* Pending Claims */}
-          <div className="forest-stat-card text-center">
-            <div className="forest-stat-value text-warning">
+            <div className="bg-gray-50 rounded-lg p-6 text-center">
+              <div className="text-3xl font-bold text-amber-600 mb-2">
               {filteredData.filter(c => c.status === 'pending').length}
             </div>
-            <div className="forest-stat-label">Pending</div>
-            <div className="text-xs text-forest-secondary mt-2">Under Review</div>
+              <div className="text-sm text-gray-600">Pending</div>
+              <div className="text-xs text-gray-500 mt-1">Under Review</div>
           </div>
           
           {/* Rejected Claims */}
-          <div className="forest-stat-card text-center">
-            <div className="forest-stat-value text-error">
+            <div className="bg-gray-50 rounded-lg p-6 text-center">
+              <div className="text-3xl font-bold text-red-600 mb-2">
               {filteredData.filter(c => c.status === 'rejected').length}
             </div>
-            <div className="forest-stat-label">Rejected</div>
-            <div className="text-xs text-forest-secondary mt-2">Require Resubmission</div>
+              <div className="text-sm text-gray-600">Rejected</div>
+              <div className="text-xs text-gray-500 mt-1">Require Resubmission</div>
           </div>
         </div>
 
         {/* Progress Visualization */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {/* Claim Type Distribution */}
-          <div className="forest-card-elevated">
-            <h4 className="text-xl font-semibold text-forest-primary mb-6 flex items-center">
-              <div className="p-2 bg-gradient-primary rounded-lg mr-3">
-                <TreePine className="h-5 w-5 text-white" />
+            <div className="bg-white rounded-lg border border-gray-200 p-6">
+              <h4 className="text-lg font-semibold text-gray-900 mb-6 flex items-center">
+                <div className="p-2 bg-emerald-100 rounded-lg mr-3">
+                  <TreePine className="h-5 w-5 text-emerald-600" />
               </div>
               Claim Type Distribution
             </h4>
@@ -453,14 +550,14 @@ export const FRAAtlas: React.FC = () => {
                 return (
                   <div key={type} className="space-y-2">
                     <div className="flex justify-between text-sm">
-                      <span className="text-forest-secondary font-medium">{type} Claims</span>
-                      <span className="text-forest-primary font-bold">{count} ({percentage.toFixed(1)}%)</span>
+                        <span className="text-gray-600 font-medium">{type} Claims</span>
+                        <span className="text-gray-900 font-bold">{count} ({percentage.toFixed(1)}%)</span>
                     </div>
-                    <div className="w-full bg-forest-light/20 rounded-full h-3">
+                      <div className="w-full bg-gray-200 rounded-full h-3">
                       <div 
                         className={`h-3 rounded-full transition-all duration-1000 ${
-                          type === 'IFR' ? 'bg-forest-primary' : 
-                          type === 'CR' ? 'bg-forest-accent' : 'bg-forest-light'
+                            type === 'IFR' ? 'bg-emerald-500' : 
+                            type === 'CR' ? 'bg-blue-500' : 'bg-amber-500'
                         }`}
                         style={{ width: `${percentage}%` }}
                       ></div>
@@ -472,10 +569,10 @@ export const FRAAtlas: React.FC = () => {
           </div>
 
           {/* Status Timeline */}
-          <div className="forest-card-elevated">
-            <h4 className="text-xl font-semibold text-forest-primary mb-6 flex items-center">
-              <div className="p-2 bg-gradient-primary rounded-lg mr-3">
-                <TrendingUp className="h-5 w-5 text-white" />
+            <div className="bg-white rounded-lg border border-gray-200 p-6">
+              <h4 className="text-lg font-semibold text-gray-900 mb-6 flex items-center">
+                <div className="p-2 bg-emerald-100 rounded-lg mr-3">
+                  <TrendingUp className="h-5 w-5 text-emerald-600" />
               </div>
               Recent Activity
             </h4>
@@ -485,17 +582,18 @@ export const FRAAtlas: React.FC = () => {
                 .sort((a, b) => new Date(b.grantDate!).getTime() - new Date(a.grantDate!).getTime())
                 .slice(0, 5)
                 .map((claim, index) => (
-                  <div key={claim.id} className="flex items-center space-x-4 p-4 bg-forest-light/10 rounded-xl border border-forest-light/20">
-                    <div className="w-3 h-3 bg-success rounded-full animate-forest-pulse"></div>
+                    <div key={claim.id} className="flex items-center space-x-4 p-4 bg-gray-50 rounded-lg border border-gray-200">
+                      <div className="w-3 h-3 bg-green-500 rounded-full"></div>
                     <div className="flex-1">
-                      <p className="text-sm font-semibold text-forest-primary">{claim.applicant}</p>
-                      <p className="text-xs text-forest-secondary">
+                        <p className="text-sm font-semibold text-gray-900">{claim.applicant}</p>
+                        <p className="text-xs text-gray-600">
                         {claim.type} • {claim.areaHectares} hectares • {new Date(claim.grantDate!).toLocaleDateString()}
                       </p>
+                      </div>
+                      <span className="px-2 py-1 bg-green-100 text-green-800 text-xs rounded-full">Approved</span>
                     </div>
-                    <span className="forest-badge-success text-xs">Approved</span>
+                  ))}
                   </div>
-                ))}
             </div>
           </div>
         </div>

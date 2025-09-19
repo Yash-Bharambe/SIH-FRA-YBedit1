@@ -82,13 +82,13 @@ export const GovernmentSchemes: React.FC = () => {
   const getStatusColor = (status: string) => {
     switch (status) {
       case 'active':
-        return 'forest-badge-success';
+        return 'bg-green-100 text-green-800';
       case 'upcoming':
-        return 'forest-badge bg-forest-sky text-forest-dark';
+        return 'bg-blue-100 text-blue-800';
       case 'closed':
-        return 'forest-badge-secondary';
+        return 'bg-gray-100 text-gray-800';
       default:
-        return 'forest-badge-secondary';
+        return 'bg-gray-100 text-gray-800';
     }
   };
 
@@ -102,182 +102,196 @@ export const GovernmentSchemes: React.FC = () => {
 
   return (
     <div className="space-y-8">
-      <div className="forest-card bg-gradient-to-r from-forest-sage/10 to-forest-medium/10 border-forest-medium/30">
-        <h1 className="text-3xl font-bold text-forest-dark mb-2">Decision Support System</h1>
-        <p className="text-forest-medium text-lg">AI-powered scheme eligibility assessment and government scheme discovery</p>
+      {/* Header Section */}
+      <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+        <div className="text-center">
+          <div className="inline-flex items-center justify-center w-16 h-16 bg-emerald-100 rounded-full mb-4">
+            <Award className="h-8 w-8 text-emerald-600" />
+          </div>
+          <h1 className="text-3xl font-bold text-gray-900 mb-2">Decision Support System</h1>
+          <p className="text-gray-600 text-lg max-w-3xl mx-auto">
+            AI-powered scheme eligibility assessment and government scheme discovery. 
+            Find the most suitable government schemes for your land and requirements.
+          </p>
+        </div>
       </div>
 
       {/* Government Schemes Content */}
       <div className="space-y-8">
           {/* Filters */}
-          <div className="forest-chart">
-            <div className="forest-chart-header">
+          <div className="bg-white rounded-lg shadow-sm border border-gray-200">
+            <div className="p-6 border-b border-gray-200">
               <div className="flex items-center space-x-2">
-                <Filter className="h-5 w-5 text-forest-dark" />
-                <h3 className="forest-chart-title">Filter Schemes</h3>
+                <Filter className="h-5 w-5 text-gray-600" />
+                <h3 className="text-lg font-semibold text-gray-900">Filter Schemes</h3>
               </div>
             </div>
             
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <div>
-                <label className="forest-form-label">State</label>
-                <select 
-                  value={selectedState}
-                  onChange={(e) => setSelectedState(e.target.value)}
-                  className="forest-select"
-                >
-                  <option value="all">All States</option>
-                  <option value="Karnataka">Karnataka</option>
-                  <option value="Maharashtra">Maharashtra</option>
-                  <option value="Tamil Nadu">Tamil Nadu</option>
-                  <option value="Gujarat">Gujarat</option>
-                  <option value="Kerala">Kerala</option>
-                </select>
-              </div>
+            <div className="p-6">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">State</label>
+                  <select 
+                    value={selectedState}
+                    onChange={(e) => setSelectedState(e.target.value)}
+                    className="block w-full rounded-lg border border-gray-300 px-4 py-3 bg-white focus:border-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 transition-colors"
+                  >
+                    <option value="all">All States</option>
+                    <option value="Karnataka">Karnataka</option>
+                    <option value="Maharashtra">Maharashtra</option>
+                    <option value="Tamil Nadu">Tamil Nadu</option>
+                    <option value="Gujarat">Gujarat</option>
+                    <option value="Kerala">Kerala</option>
+                  </select>
+                </div>
 
-              <div>
-                <label className="forest-form-label">Category</label>
-                <select 
-                  value={selectedCategory}
-                  onChange={(e) => setSelectedCategory(e.target.value)}
-                  className="forest-select"
-                >
-                  <option value="all">All Categories</option>
-                  <option value="Income Support">Income Support</option>
-                  <option value="Land Rights">Land Rights</option>
-                  <option value="Water Conservation">Water Conservation</option>
-                  <option value="Soil Management">Soil Management</option>
-                  <option value="Afforestation">Afforestation</option>
-                </select>
-              </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Category</label>
+                  <select 
+                    value={selectedCategory}
+                    onChange={(e) => setSelectedCategory(e.target.value)}
+                    className="block w-full rounded-lg border border-gray-300 px-4 py-3 bg-white focus:border-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 transition-colors"
+                  >
+                    <option value="all">All Categories</option>
+                    <option value="Income Support">Income Support</option>
+                    <option value="Land Rights">Land Rights</option>
+                    <option value="Water Conservation">Water Conservation</option>
+                    <option value="Soil Management">Soil Management</option>
+                    <option value="Afforestation">Afforestation</option>
+                  </select>
+                </div>
 
-              <div>
-                <label className="forest-form-label">Zone Type</label>
-                <select 
-                  value={selectedZone}
-                  onChange={(e) => setSelectedZone(e.target.value)}
-                  className="forest-select"
-                >
-                  <option value="all">All Zones</option>
-                  <option value="agricultural">Agricultural</option>
-                  <option value="forest">Forest</option>
-                  <option value="water">Water Bodies</option>
-                  <option value="residential">Residential</option>
-                </select>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Zone Type</label>
+                  <select 
+                    value={selectedZone}
+                    onChange={(e) => setSelectedZone(e.target.value)}
+                    className="block w-full rounded-lg border border-gray-300 px-4 py-3 bg-white focus:border-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 transition-colors"
+                  >
+                    <option value="all">All Zones</option>
+                    <option value="agricultural">Agricultural</option>
+                    <option value="forest">Forest</option>
+                    <option value="water">Water Bodies</option>
+                    <option value="residential">Residential</option>
+                  </select>
+                </div>
               </div>
             </div>
           </div>
 
           {/* Statistics */}
           <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-            <div className="forest-stat-card text-center">
-              <div className="forest-stat-value text-forest-dark mb-2">{filteredSchemes.length}</div>
-              <div className="forest-stat-label">Available Schemes</div>
+            <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 text-center">
+              <div className="text-3xl font-bold text-gray-900 mb-2">{filteredSchemes.length}</div>
+              <div className="text-sm text-gray-600">Available Schemes</div>
             </div>
             
-            <div className="forest-stat-card text-center">
-              <div className="forest-stat-value text-forest-medium mb-2">
+            <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 text-center">
+              <div className="text-3xl font-bold text-emerald-600 mb-2">
                 {filteredSchemes.filter(s => s.status === 'active').length}
               </div>
-              <div className="forest-stat-label">Active Schemes</div>
+              <div className="text-sm text-gray-600">Active Schemes</div>
             </div>
             
-            <div className="forest-stat-card text-center">
-              <div className="forest-stat-value text-forest-moss mb-2">
+            <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 text-center">
+              <div className="text-3xl font-bold text-blue-600 mb-2">
                 {formatCurrency(filteredSchemes.reduce((sum, scheme) => sum + scheme.funding, 0))}
               </div>
-              <div className="forest-stat-label">Total Funding</div>
+              <div className="text-sm text-gray-600">Total Funding</div>
             </div>
             
-            <div className="forest-stat-card text-center">
-              <div className="forest-stat-value text-forest-accent mb-2">47</div>
-              <div className="forest-stat-label">Eligible Plots</div>
+            <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 text-center">
+              <div className="text-3xl font-bold text-amber-600 mb-2">47</div>
+              <div className="text-sm text-gray-600">Eligible Plots</div>
             </div>
           </div>
 
           {/* Schemes List */}
-          <div className="space-y-4">
+          <div className="space-y-6">
             {filteredSchemes.map((scheme) => (
-              <div key={scheme.id} className="forest-card hover:shadow-forest-lg transition-all duration-300">
-                <div className="flex items-start justify-between mb-6">
-                  <div className="flex items-start space-x-3">
-                    <div className="p-3 bg-forest-sage/10 rounded-xl shadow-forest">
-                      <Award className="h-6 w-6 text-forest-dark" />
+              <div key={scheme.id} className="bg-white rounded-lg shadow-sm border border-gray-200 hover:shadow-md transition-all duration-300">
+                <div className="p-6">
+                  <div className="flex items-start justify-between mb-6">
+                    <div className="flex items-start space-x-4">
+                      <div className="p-3 bg-emerald-50 rounded-lg">
+                        <Award className="h-6 w-6 text-emerald-600" />
+                      </div>
+                      <div className="flex-1">
+                        <div className="flex items-center space-x-3 mb-2">
+                          <h3 className="text-xl font-semibold text-gray-900">{scheme.name}</h3>
+                          <span className={`px-3 py-1 rounded-full text-xs font-medium capitalize ${getStatusColor(scheme.status)}`}>
+                            {scheme.status}
+                          </span>
+                        </div>
+                        <p className="text-gray-600 max-w-3xl">{scheme.description}</p>
+                        <div className="mt-2">
+                          <span className="inline-block px-3 py-1 bg-gray-100 text-gray-700 text-sm rounded-full">
+                            {scheme.category}
+                          </span>
+                        </div>
+                      </div>
                     </div>
-                    <div>
-                      <h3 className="text-lg font-semibold text-forest-dark">{scheme.name}</h3>
-                      <p className="text-forest-medium mt-1 max-w-2xl">{scheme.description}</p>
-                    </div>
-                  </div>
-                  
-                  <div className="flex items-center space-x-3">
-                    <span className={`forest-badge capitalize ${getStatusColor(scheme.status)}`}>
-                      {scheme.status}
-                    </span>
-                    <button className="p-2 text-forest-medium hover:text-forest-dark rounded-lg hover:bg-forest-sage/10 transition-colors">
-                      <ExternalLink className="h-4 w-4" />
+                    
+                    <button className="p-2 text-gray-400 hover:text-gray-600 rounded-lg hover:bg-gray-100 transition-colors">
+                      <ExternalLink className="h-5 w-5" />
                     </button>
                   </div>
-                </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                  <div className="space-y-3">
-                    <h4 className="font-semibold text-forest-dark">Eligibility</h4>
-                    <div className="flex flex-wrap gap-2">
-                      {scheme.eligibility.map((criteria, index) => (
-                        <span key={index} className="forest-badge-secondary text-sm">
-                          {criteria}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-
-                  <div className="space-y-3">
-                    <h4 className="font-semibold text-forest-dark">Coverage</h4>
-                    <div className="space-y-2">
-                      <div className="flex items-center space-x-2 text-sm text-forest-medium">
-                        <MapPin className="h-4 w-4" />
-                        <span>{scheme.states.join(', ')}</span>
-                      </div>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div className="space-y-3">
+                      <h4 className="font-semibold text-gray-900 text-sm uppercase tracking-wide">Eligibility</h4>
                       <div className="flex flex-wrap gap-2">
-                        {scheme.zoneTypes.map((zone, index) => (
-                          <span key={index} className="forest-badge-success text-sm capitalize">
-                            {zone}
+                        {scheme.eligibility.map((criteria, index) => (
+                          <span key={index} className="px-3 py-1 bg-gray-100 text-gray-700 text-sm rounded-full">
+                            {criteria}
                           </span>
                         ))}
                       </div>
                     </div>
-                  </div>
 
-                  <div className="space-y-3">
-                    <h4 className="font-semibold text-forest-dark">Details</h4>
-                    <div className="space-y-2">
-                      <div className="flex items-center space-x-2 text-sm">
-                        <DollarSign className="h-4 w-4 text-forest-medium" />
-                        <span className="font-semibold text-forest-medium">{formatCurrency(scheme.funding)}</span>
+                    <div className="space-y-3">
+                      <h4 className="font-semibold text-gray-900 text-sm uppercase tracking-wide">Coverage</h4>
+                      <div className="space-y-2">
+                        <div className="flex items-center space-x-2 text-sm text-gray-600">
+                          <MapPin className="h-4 w-4" />
+                          <span>{scheme.states.join(', ')}</span>
+                        </div>
+                        <div className="flex flex-wrap gap-2">
+                          {scheme.zoneTypes.map((zone, index) => (
+                            <span key={index} className="px-3 py-1 bg-emerald-100 text-emerald-700 text-sm rounded-full capitalize">
+                              {zone}
+                            </span>
+                          ))}
+                        </div>
                       </div>
-                      <div className="flex items-center space-x-2 text-sm text-forest-medium">
-                        <Calendar className="h-4 w-4" />
-                        <span>Deadline: {new Date(scheme.deadline).toLocaleDateString()}</span>
+                    </div>
+
+                    <div className="space-y-3">
+                      <h4 className="font-semibold text-gray-900 text-sm uppercase tracking-wide">Details</h4>
+                      <div className="space-y-2">
+                        <div className="flex items-center space-x-2 text-sm">
+                          <DollarSign className="h-4 w-4 text-gray-500" />
+                          <span className="font-semibold text-gray-900">{formatCurrency(scheme.funding)}</span>
+                        </div>
+                        <div className="flex items-center space-x-2 text-sm text-gray-600">
+                          <Calendar className="h-4 w-4" />
+                          <span>Deadline: {new Date(scheme.deadline).toLocaleDateString()}</span>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-
-                <div className="mt-6 pt-6 border-t border-forest-sage/20 flex justify-end">
-                  <button className="forest-button-primary">
-                    Apply Now
-                  </button>
                 </div>
               </div>
             ))}
           </div>
 
           {filteredSchemes.length === 0 && (
-            <div className="text-center py-12">
-              <Award className="h-12 w-12 text-forest-medium mx-auto mb-4" />
-              <h3 className="text-lg font-semibold text-forest-dark mb-2">No schemes found</h3>
-              <p className="text-forest-medium">Try adjusting your filters to find relevant schemes.</p>
+            <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-12">
+              <div className="text-center">
+                <Award className="h-12 w-12 text-gray-400 mx-auto mb-4" />
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">No schemes found</h3>
+                <p className="text-gray-600">Try adjusting your filters to find relevant schemes.</p>
+              </div>
             </div>
           )}
       </div>
